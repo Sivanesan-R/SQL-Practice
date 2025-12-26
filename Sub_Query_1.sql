@@ -86,3 +86,55 @@ select
 *
 from Sales.Orders
 where CustomerID not in (select CustomerID from Sales.Customers where Country = 'Germany')	--Sub Query
+
+
+--Find female employees whose salaries are greater
+--than the salaries of ANY male employees.
+
+select 
+	EmployeeID,
+	FirstName,
+	Gender,
+	Salary
+from Sales.Employees
+where Gender = 'F'
+and Salary > any(select Salary from Sales.Employees where Gender = 'M')
+
+
+
+--Find female employees whose salaries are greater
+--than the salaries of ALL male employees.
+
+select 
+	EmployeeID,
+	FirstName,
+	Gender,
+	Salary
+from Sales.Employees
+where Gender = 'F'
+and Salary > all(select Salary from Sales.Employees where Gender = 'M')
+
+
+--show all customers details and find the total order for each customers.
+
+select 
+* ,
+	(select 
+	COUNT(*)
+	from Sales.Orders o
+	where o.CustomerID = c.CustomerID) TotalSales
+from Sales.Customers c
+
+
+--show the details of orders made by customers in Germany
+
+select
+* 
+from Sales.Orders o
+where exists (
+	select 
+	* 
+	from Sales.Customers c
+	where Country = 'Germany'
+	and o.CustomerID = c.CustomerID
+)
