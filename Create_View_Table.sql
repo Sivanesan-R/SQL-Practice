@@ -19,4 +19,5 @@ select
 	sum(TotalSales) over (Order by OrderMonth) as RunningTotal
 from Sales.V_Monthly_Summary
 
-drop view V_Monthly_Summary
+drop view Sales.V_Monthly_Summary
+
