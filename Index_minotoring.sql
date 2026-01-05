@@ -11,7 +11,3 @@ from sys.indexes idx
 join sys.tables tbl
 on idx.object_id = tbl.object_id
 order by tbl.name,idx.name
-
-
-select * from Sales.Products
-where Product = 'caps'
